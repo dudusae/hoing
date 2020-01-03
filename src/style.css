@@ -1,0 +1,79 @@
+@import '../node_modules/open-color/open-color.css';
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
+* { font-family: 'Spoqa Han Sans',  'Sans-serif'; 
+font-weight: 300;
+box-sizing: border-box;}
+
+#root {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.box_todo {
+  width: 50%;
+}
+.box_ing {
+  background-color: var(--oc-gray-0);
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form__group {
+  position: relative;
+  padding: 8px;
+  margin: 8px auto;
+  width: 90%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--oc-gray-3);
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--oc-gray-7);
+  padding: 14px 0 10px 0;
+  background: transparent;
+  transition: border-color 0.15s;
+}
+.form__field::placeholder {
+  color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--oc-gray-4);
+}
+
+.form__field:focus {
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--oc-gray-6);
+  font-weight: 500;
+  border-width: 3px;
+  border-image: linear-gradient(to right, var(--oc-red-6), var(--oc-red-3));
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 0.7rem;
+  color: var(--oc-red-4);
+  font-weight: 400;
+}
+
