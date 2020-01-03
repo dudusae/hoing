@@ -77,3 +77,7 @@ box-sizing: border-box;}
   font-weight: 400;
 }
 
+.btn__del {
+  position: absolute;
+  right: 10px;
+}

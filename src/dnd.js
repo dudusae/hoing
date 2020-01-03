@@ -46,6 +46,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   borderBottom: `${isDragging ? 'dotted 2px var(--oc-red-4)' : 'solid 1px var(--oc-gray-2)'}`,
   // margin: `0 0 ${grid}px 0`,
   margin:0,
+  position: 'relative',
 
   color: isDragging ? 'var(--oc-red-6)' : 'var(--oc-gray-7)',
   background: isDragging ? 'var(--oc-red-1)' : 'transparent',
@@ -155,6 +156,7 @@ class Dnd extends Component {
       
       <DragDropContext onDragEnd={this.onDragEnd}>
        <div className="box_todo">
+       
        <TodoForm onCreate={this.handleCreate} />
 
           <Droppable droppableId="droppable">
@@ -176,6 +178,7 @@ class Dnd extends Component {
                         )}
                       >
                         {item.content}
+                        <button class="btn__del">삭제</button>
                       </div>
                     )}
                   </Draggable>
