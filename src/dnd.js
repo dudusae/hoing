@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './style.css';
 import TodoForm from './TodoForm';
+import DeleteBtn from './DeleteBtn'
 
-// fake data generator
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k + offset}`,
-    content: `item ${k + offset}`,
-  }));
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -85,7 +80,7 @@ class Dnd extends Component {
   id = 0;
   state = {
     items: [],
-    selected: getItems(5, 10),
+    selected: []
   };
 
   handleCreate = data => {
@@ -95,10 +90,13 @@ class Dnd extends Component {
     });
   };
 
-  // state = {
-  //   items: getItems(10),
-  //   selected: getItems(5, 10),
-  // };
+  handleRemove = (id) => {
+    const { items } = this.state;
+    this.setState({
+      items: items.filter(item => item.id !== id)
+    })
+  }
+
   /**
    * A semi-generic way to handle multiple lists. Matches
    * the IDs of the droppable container to the names of the
@@ -178,7 +176,7 @@ class Dnd extends Component {
                         )}
                       >
                         {item.content}
-                        <button class="btn__del">삭제</button>
+                        <DeleteBtn id={item.id} onRemove={this.handleRemove} />
                       </div>
                     )}
                   </Draggable>

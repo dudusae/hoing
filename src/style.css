@@ -78,6 +78,19 @@ box-sizing: border-box;}
 }
 
 .btn__del {
+  width: 28px;
+  height:28px;
   position: absolute;
-  right: 10px;
+  top:12px;
+  right: 14px;
+  appearance: none;
+  background-image: url('https://img.icons8.com/ios/48/000000/delete-sign.png');
+  background-size: 24px 24px;
+  background-position: 2px 2px;
+  background-repeat: no-repeat;
+  border:none;
+  font-size:0;
+  outline: none;
+  cursor: pointer;
+  background-color:transparent;
 }

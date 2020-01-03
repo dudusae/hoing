@@ -56,42 +56,6 @@ render(){
 
 
 
-// // function saveTasks(key, array) {
-// //   localStorage.setItem(key, JSON.stringify(array));
-// // }
-
-// class PushTodo extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       tasks: [],
-//     };
-//   };
-
-//   handleSubmit = (e) => {
-//     e.preventDefault();
-//     const input = e.target[0];
-//     const text = input.value;
-//     const newId = getId();
-//     const newTask = {
-//       id: newId,
-//       content: text,
-//     };
-//     this.setState({ tasks: this.state.tasks.concat({tasks:'곽혜림'})});
-//     console.log(this.state.tasks);
-//     // saveTasks('TODO', )
-//     // this.context.saveTasks();
-//     // paintTodo(currentValue);
-//     // input.value = '';
-//   }
-
-//   render() {
-//     // const test = this.context.tasks;
-//     // console.log(test);
-//     return <Input onSubmit={this.handleSubmit} />;
-//   }
-// }
-
 export default TodoForm;
 
 
