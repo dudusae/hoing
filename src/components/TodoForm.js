@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './style.css';
+import './../style.css';
 
 const getId = () => {
   let newId = Date.now() + Math.ceil(Math.random() * 100);

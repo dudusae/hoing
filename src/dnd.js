@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './style.css';
-import TodoForm from './TodoForm';
-import DeleteBtn from './DeleteBtn'
+import TodoForm from './components/TodoForm';
+import DeleteBtn from './components/DeleteBtn'
+import InlineForm from './components/InlineForm';
 
 
 // a little function to help us with reordering the result
@@ -39,7 +40,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   borderRadius: `${isDragging ? '30px' : '0'}`,
   border: `dotted 2px ${isDragging ? 'var(--oc-red-4)' : 'transparent'}`,
   borderBottom: `${isDragging ? 'dotted 2px var(--oc-red-4)' : 'solid 1px var(--oc-gray-2)'}`,
-  // margin: `0 0 ${grid}px 0`,
   margin:0,
   position: 'relative',
 
@@ -80,7 +80,9 @@ class Dnd extends Component {
   id = 0;
   state = {
     items: [],
-    selected: []
+    selected: [],
+    editing: false,
+    editingId: '',
   };
 
   handleCreate = data => {
@@ -95,6 +97,25 @@ class Dnd extends Component {
     this.setState({
       items: items.filter(item => item.id !== id)
     })
+  }
+
+  handleUpdate = (data) => {
+    const { items } = this.state;
+    this.setState({
+      items: items.map(
+        info => data.id === info.id
+          ? { ...info, ...data } 
+          : info 
+      )
+    , editing: false})
+  }
+
+
+  handleToggleEdit = (e) => {
+    const { editing } = this.state;
+    const id = e.target.dataset.rbdDraggableId;
+    this.setState({ editing: !editing });
+    this.setState({editingId: id})
   }
 
   /**
@@ -175,9 +196,13 @@ class Dnd extends Component {
                           snapshot.isDragging,
                           provided.draggableProps.style,
                         )}
-                        className="draggable"
+                        className={snapshot.isDragging? "" : "draggable__animation"} 
+                        onDoubleClick={this.handleToggleEdit}
                       >
-                        {item.content}
+                        {(this.state.editing && this.state.editingId === item.id) ? 
+                       <InlineForm item={item} onUpdate={this.handleUpdate}/>
+                          : item.content
+                        }
                         <DeleteBtn id={item.id} onRemove={this.handleRemove} />
                       </div>
                     )}

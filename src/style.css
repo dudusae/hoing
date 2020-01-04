@@ -1,9 +1,11 @@
 @import '../node_modules/open-color/open-color.css';
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
-* { font-family: 'Spoqa Han Sans',  'Sans-serif'; 
-font-weight: 300;
-box-sizing: border-box;}
+* {
+  font-family: 'Spoqa Han Sans', 'Sans-serif';
+  font-weight: 300;
+  box-sizing: border-box;
+}
 
 #root {
   display: flex;
@@ -79,60 +81,51 @@ box-sizing: border-box;}
 
 .btn__del {
   width: 28px;
-  height:28px;
+  height: 28px;
   position: absolute;
-  top:12px;
+  top: 12px;
   right: 14px;
   appearance: none;
   background-image: url('https://img.icons8.com/ios/48/000000/delete-sign.png');
   background-size: 24px 24px;
   background-position: 2px 2px;
   background-repeat: no-repeat;
-  border:none;
-  font-size:0;
-  outline: none;
+  opacity: 0.2;
+  border: none;
+  font-size: 0;
+  outline: 0;
   cursor: pointer;
-  background-color:transparent;
+  background-color: transparent;
 }
-
-/* 
-.fade li {
-  transition: all 0.4s ease-out;
-  opacity: 0;
-  height: 2em;
-}
-.fade li.show {
-  opacity: 1;
-} */
 
 @-webkit-keyframes slide-in-top {
   0% {
-    -webkit-transform: translateY(-30px);
-            transform: translateY(-30px);
-    opacity: 0;
+    opacity: 0.3;
   }
   100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
     opacity: 1;
   }
 }
 @keyframes slide-in-top {
   0% {
-    -webkit-transform: translateY(-30px);
-            transform: translateY(-30px);
-    opacity: 0;
+    opacity: 0.3;
   }
   100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
     opacity: 1;
   }
 }
 
+.draggable__animation {
+  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
 
-
-.draggable {
-  -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+.inline__field{
+  width:90%;
+  height:24px;
+  font-size:1rem;
+  border:none;
+  outline:0;
+  color:var(--oc-red-4);
+  margin:0;
 }
