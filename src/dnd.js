@@ -32,48 +32,24 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const grid = 8;
+const getListClass = (name, isDraggingOver) => {
+  const classList = [
+    `${name}-list`,
+    isDraggingOver ? `${name}-list--isDraggingOver` : '',
+  ]
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: 'none',
-  padding: grid * 2,
-  borderRadius: `${isDragging ? '30px' : '0'}`,
-  border: `dotted 2px ${isDragging ? 'var(--oc-red-4)' : 'transparent'}`,
-  borderBottom: `${isDragging ? 'dotted 2px var(--oc-red-4)' : 'solid 1px var(--oc-gray-2)'}`,
-  margin:0,
-  position: 'relative',
+  return classList.join(' ');
+}
 
-  color: isDragging ? 'var(--oc-red-6)' : 'var(--oc-gray-7)',
-  background: isDragging ? 'var(--oc-red-1)' : 'transparent',
+const getItemClass = (name, isDragging) => {
+  const classList = [
+    `${name}-item`,
+    isDragging ? `${name}-item--isDragging` : '',
+  ]
 
-  ...draggableStyle,
-});
+  return classList.join(' ');
+}
 
-const getItemStyle2 = (isDragging, draggableStyle) => ({
-  userSelect: 'none',
-  padding: grid * 2,
-  borderRadius: '30px',
-  margin: `0 0 ${grid}px 0`,
-  color: isDragging ? 'var(--oc-red-6)' : 'var(--oc-gray-7)',
-  fontWeight: 500,
-  background: isDragging ? 'var(--oc-red-1)' : 'var(--oc-gray-0)',
-  border: `${isDragging ? 'dotted 2px var(--oc-red-4)' : 'solid 2px var(--oc-red-4)'}`,
-
-  ...draggableStyle,
-});
-
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'white' : 'white',
-  padding: grid,
-  width: '90%',
-  margin: `0 auto`,
-});
-const getListStyle2 = isDraggingOver => ({
-  background: isDraggingOver ? 'var(--oc-red-1)' : 'var(--oc-gray-0)',
-  padding: grid,
-  width: '90%',
-  borderRadius: 20,
-});
 
 class Dnd extends Component {
 
@@ -124,8 +100,8 @@ class Dnd extends Component {
    * source arrays stored in the state.
    */
   id2List = {
-    droppable: 'items',
-    droppable2: 'selected',
+    todo: 'items',
+    doing: 'selected',
   };
 
   getList = id => this.state[this.id2List[id]];
@@ -148,7 +124,7 @@ class Dnd extends Component {
 
       let state = { items };
 
-      if (source.droppableId === 'droppable2') {
+      if (source.droppableId === 'doing') {
         state = { selected: items };
       }
 
@@ -162,8 +138,8 @@ class Dnd extends Component {
       );
 
       this.setState({
-        items: result.droppable,
-        selected: result.droppable2,
+        items: result.todo,
+        selected: result.doing,
       });
     }
   };
@@ -174,15 +150,15 @@ class Dnd extends Component {
     return (
       
       <DragDropContext onDragEnd={this.onDragEnd}>
-       <div className="box_todo">
+       <div className="todo__container">
        
        <TodoForm onCreate={this.handleCreate} />
 
-          <Droppable droppableId="droppable">
+          <Droppable droppableId="todo">
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
-                style={getListStyle(snapshot.isDraggingOver)}
+                className={getListClass("todo", snapshot.isDraggingOver)}
                 
               >
                 {this.state.items.map((item, index) => (
@@ -192,11 +168,8 @@ class Dnd extends Component {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style,
-                        )}
-                        className={snapshot.isDragging? "" : "draggable__animation"} 
+                        style={{...provided.draggableProps.style}}
+                        className={getItemClass("todo", snapshot.isDragging)}
                         onDoubleClick={this.handleToggleEdit}
                       >
                         {(this.state.editing && this.state.editingId === item.id) ? 
@@ -213,13 +186,15 @@ class Dnd extends Component {
             )}
           </Droppable>
           </div>
-        <div className="box_ing">
-          <Droppable droppableId="droppable2">
+        <div className="doing__container">
+          <Droppable droppableId="doing">
+            
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
-                style={getListStyle2(snapshot.isDraggingOver)}
+                className={getListClass("doing", snapshot.isDraggingOver)}
               >
+                <div className="doing__guide">지금 할 일을 여기에 끌어다 놓으세요</div>
                 {this.state.selected.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
@@ -227,10 +202,10 @@ class Dnd extends Component {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={getItemStyle2(
-                          snapshot.isDragging,
-                          provided.draggableProps.style,
-                        )}
+                        style={{...provided.draggableProps.style}}
+                        className={getItemClass("doing", snapshot.isDragging)}
+
+
                       >
                         {item.content}
                       </div>

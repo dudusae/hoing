@@ -13,25 +13,33 @@
   padding: 30px;
 }
 
-.box_todo {
+.todo__container {
   width: 50%;
 }
-.box_ing {
+.doing__container {
   background-color: var(--oc-gray-0);
   width: 50%;
+  height:90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.form__group {
+
+.doing__guide {
+  text-align:center;
+  font-size:1.5rem;
+  color:var(--oc-gray-3);
+}
+
+.todo-form__group {
   position: relative;
   padding: 8px;
   margin: 8px auto;
   width: 90%;
 }
 
-.form__field {
+.todo-form__field {
   font-family: inherit;
   width: 100%;
   border: 0;
@@ -43,16 +51,16 @@
   background: transparent;
   transition: border-color 0.15s;
 }
-.form__field::placeholder {
+.todo-form__field::placeholder {
   color: transparent;
 }
-.form__field:placeholder-shown ~ .form__label {
+.todo-form__field:placeholder-shown ~ .todo-form__label {
   font-size: 1.3rem;
   cursor: text;
   top: 20px;
 }
 
-.form__label {
+.todo-form__label {
   position: absolute;
   top: 0;
   display: block;
@@ -61,7 +69,7 @@
   color: var(--oc-gray-4);
 }
 
-.form__field:focus {
+.todo-form__field:focus {
   padding-bottom: 9px;
   border-bottom: 2px solid var(--oc-gray-6);
   font-weight: 500;
@@ -69,7 +77,7 @@
   border-image: linear-gradient(to right, var(--oc-red-6), var(--oc-red-3));
   border-image-slice: 1;
 }
-.form__field:focus ~ .form__label {
+.todo-form__field:focus ~ .todo-form__label {
   position: absolute;
   top: 0;
   display: block;
@@ -79,7 +87,7 @@
   font-weight: 400;
 }
 
-.btn__del {
+.delete__btn {
   width: 28px;
   height: 28px;
   position: absolute;
@@ -115,10 +123,6 @@
   }
 }
 
-.draggable__animation {
-  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
 
 .inline__field{
   width:90%;
@@ -129,3 +133,70 @@
   color:var(--oc-red-4);
   margin:0;
 }
+
+.todo-list {
+  padding: 8px;
+  width: 90%;
+  margin: 0 auto;
+  background-color : 'white';
+}
+
+.todo-list--isDraggingOver {
+  /* none */
+}
+
+.todo-item {
+  user-select: 'none';
+  padding: 16px;
+  border-radius: 0;
+  border: dotted 2px transparent;
+  border-bottom: solid 1px var(--oc-gray-2);
+  margin:0;
+  position: relative;
+  color: var(--oc-gray-7);
+  background-color: transparent;
+  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.todo-item--isDragging {
+  border-radius: 30px;
+  border: dotted 2px var(--oc-red-4);
+  border-bottom: dotted 2px var(--oc-red-4);
+  color: var(--oc-red-6);
+  background-color: var(--oc-red-1);
+  -webkit-animation:none;
+  animation:none;
+  
+}
+
+.doing-list {
+  padding: 8px;
+  width: 90%;
+  border-radius: 20px;
+  background-color:var(--oc-gray-0);
+}
+
+.doing-list--isDraggingOver {
+  background-color: var(--oc-red-1);
+}
+
+
+.doing-item {
+  user-select: 'none';
+  padding: 16px;
+  border-radius: 30px;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+  color:var(--oc-gray-7);
+  background-color: var(--oc-gray-0);
+  border: solid 2px var(--oc-red-4);
+}
+
+.doing-item--isDragging {
+  color:var(--oc-red-6);
+  background-color: var(--oc-red-1);
+  border: dotted 2px var(--oc-red-4);
+}
+
+

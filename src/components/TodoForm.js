@@ -33,19 +33,19 @@ class TodoForm extends Component{
 
 render(){
   return (
-    <form className="form__group field" onSubmit={this.handleSubmit}>
+    <form className="todo-form__group field" onSubmit={this.handleSubmit}>
       <input
         type="input"
-        className="form__field"
+        className="todo-form__field"
         placeholder="할 일을 입력해주세요"
         name="content"
         id="name"
         required
-        autoComplete="none"
+        autoComplete="off"
         value={this.state.content}
         onChange={this.handleChange}
       />
-      <label htmlFor="name" className="form__label">
+      <label htmlFor="name" className="todo-form__label">
         할 일을 입력해주세요
       </label>
     </form>

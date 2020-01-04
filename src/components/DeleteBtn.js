@@ -10,7 +10,7 @@ class DeleteBtn extends Component {
 
   render() {
     return (
-      <button className="btn__del" onClick={this.handleRemove}>
+      <button className="delete__btn" onClick={this.handleRemove}>
         삭제
       </button>
     );
