@@ -162,6 +162,7 @@ class Dnd extends Component {
               <div
                 ref={provided.innerRef}
                 style={getListStyle(snapshot.isDraggingOver)}
+                
               >
                 {this.state.items.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -174,6 +175,7 @@ class Dnd extends Component {
                           snapshot.isDragging,
                           provided.draggableProps.style,
                         )}
+                        className="draggable"
                       >
                         {item.content}
                         <DeleteBtn id={item.id} onRemove={this.handleRemove} />
