@@ -4,6 +4,7 @@ import './style.css';
 import TodoForm from './components/TodoForm';
 import DeleteBtn from './components/DeleteBtn'
 import InlineForm from './components/InlineForm';
+import DoingTimer from './components/DoingTimer';
 
 
 // a little function to help us with reordering the result
@@ -126,8 +127,8 @@ class Dnd extends Component {
 
       if (source.droppableId === 'doing') {
         state = { selected: items };
+        
       }
-
       this.setState(state);
     } else {
       const result = move(
@@ -187,6 +188,7 @@ class Dnd extends Component {
           </Droppable>
           </div>
         <div className="doing__container">
+        {this.state.selected.length > 0 ? <DoingTimer/> : <div className="doing__guide">지금 할 일을 <br/>여기에 끌어다 놓으세요</div> }
           <Droppable droppableId="doing">
             
             {(provided, snapshot) => (
@@ -194,7 +196,6 @@ class Dnd extends Component {
                 ref={provided.innerRef}
                 className={getListClass("doing", snapshot.isDraggingOver)}
               >
-                <div className="doing__guide">지금 할 일을 여기에 끌어다 놓으세요</div>
                 {this.state.selected.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
@@ -204,14 +205,13 @@ class Dnd extends Component {
                         {...provided.dragHandleProps}
                         style={{...provided.draggableProps.style}}
                         className={getItemClass("doing", snapshot.isDragging)}
-
-
                       >
                         {item.content}
                       </div>
                     )}
                   </Draggable>
                 ))}
+                
                 {provided.placeholder}
               </div>
             )}

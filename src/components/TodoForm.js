@@ -7,18 +7,25 @@ const getId = () => {
   return newId;
 };
 
+function getDate() {
+  const date = new Date(),
+    month = date.getMonth()+1,
+    day = date.getDate();
+  return `${month}월 ${day}일`
+}
 
 class TodoForm extends Component{
   state = {
     id:'',
-    content:''
+    content:'',
+    date: getDate(),
   }
 
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
       id: getId()
-    })
+    }) 
   }
 
   handleSubmit = (e) => {
@@ -46,7 +53,7 @@ render(){
         onChange={this.handleChange}
       />
       <label htmlFor="name" className="todo-form__label">
-        할 일을 입력해주세요
+      {this.state.date}, 할 일을 입력해주세요
       </label>
     </form>
   );

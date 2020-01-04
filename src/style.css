@@ -16,21 +16,6 @@
 .todo__container {
   width: 50%;
 }
-.doing__container {
-  background-color: var(--oc-gray-0);
-  width: 50%;
-  height:90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.doing__guide {
-  text-align:center;
-  font-size:1.5rem;
-  color:var(--oc-gray-3);
-}
 
 .todo-form__group {
   position: relative;
@@ -170,19 +155,58 @@
   
 }
 
+.doing__container {
+  background-color: var(--oc-gray-0);
+  width: 50%;
+  height:90vh;
+  padding:5%;
+  
+}
+
+.doing__guide {
+  width:100%;
+  text-align:center;
+  font-size:1.5rem;
+  color:var(--oc-gray-3);
+  margin-bottom:30px;
+}
+
+.doing__timer{
+  text-align:center;
+  font-size:2.4rem;
+  font-weight:300;
+  color: var(--oc-red-4);
+  margin-bottom:50px;
+  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
 .doing-list {
   padding: 8px;
-  width: 90%;
+  width: 100%;
+  height: 50%;
   border-radius: 20px;
   background-color:var(--oc-gray-0);
+  border: 2px dotted var(--oc-gray-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .doing-list--isDraggingOver {
-  background-color: var(--oc-red-1);
+  background-color: var(--oc-red-0);
+  border: 2px dotted var(--oc-red-1);
+  
+}
+
+.doing-list--isDraggingOver div {
+  color: var(--oc-red-5);
 }
 
 
 .doing-item {
+  width:90%;
   user-select: 'none';
   padding: 16px;
   border-radius: 30px;
@@ -198,5 +222,6 @@
   background-color: var(--oc-red-1);
   border: dotted 2px var(--oc-red-4);
 }
+
 
 
