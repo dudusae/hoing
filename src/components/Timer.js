@@ -10,7 +10,6 @@ const doneLS = 'DONE';
 const TimerOn = ({ onClick }) => {
   //   const [count, setCount] = useState(1500000);
   const [count, setCount] = useState(2000);
-  // const [isRunning, setIsRunning] = useState(true);
   const [timeIn, setTimeIn] = useState(true);
   const [timeOutCount, setTimeOutCount] = useState(1000);
 
@@ -21,7 +20,6 @@ const TimerOn = ({ onClick }) => {
         setTimeIn(false);
       }
     },
-    // isRunning && timeIn ? 1000 : null,
     timeIn ? 1000 : null,
   );
 
@@ -32,27 +30,17 @@ const TimerOn = ({ onClick }) => {
     !timeIn ? 1000 : null,
   );
 
-  // const handleIsRunningChange = e => {
-  //   setIsRunning(!isRunning);
-  // };
-
   return (
     <div className="doing__timer">
       {timeToMmSs(count, ':')}
-      {/* {timeIn ? 
-            <button onClick={handleIsRunningChange}>
-                {isRunning === true ? '일시정지' : '재개'}
-             </button> : ''} */}
-
-      {timeIn ? (
-        ''
-      ) : (
-        <div className="doing__timeout">
-          + {timeToMmSs(timeOutCount, ':')}
-          <br />
-          <button onClick={onClick} className="doing__btn" name="timerOff">정지</button>
-        </div>
+      {timeIn ? ('') : (<div className="doing__timeout">
+                        + {timeToMmSs(timeOutCount, ':')}
+                        </div>
       )}
+      {timeIn ? (<button onClick={onClick} className="doing__btn doing__stopbtn--timein" name="timerOff">정지</button>) 
+      : (<button onClick={onClick} className="doing__btn doing__stopbtn--timeout" name="timerOff">정지</button>
+      )}
+
     </div>
   );
 };
@@ -61,7 +49,7 @@ const TimerOff = ({ onClick }) => {
   return (
     <div className="doing__timer">
       25:00
-      <button className="doing__btn" onClick={onClick} name="timerOn">
+      <button className="doing__btn doing__startbtn" onClick={onClick} name="timerOn">
         시작
       </button>
     </div>

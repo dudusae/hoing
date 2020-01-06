@@ -8,10 +8,7 @@ import Timer from './components/Timer';
 import { save, load } from './components/localStorage';
 import DoneList from './components/DoneList';
 
-
-
 const todoLS = 'TODO';
-
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -78,16 +75,19 @@ class Dnd extends Component {
 
   handleRemove = (from, id) => {
     if (from === 'todo') {
-    const { todos } = this.state;
-    this.setState({
-      todos: todos.filter(item => item.id !== id),});
-    save(
-      todoLS,
-      todos.filter(item => item.id !== id),);
+      const { todos } = this.state;
+      this.setState({
+        todos: todos.filter(item => item.id !== id),
+      });
+      save(
+        todoLS,
+        todos.filter(item => item.id !== id),
+      );
     } else if (from === 'doing') {
       const { doings } = this.state;
       this.setState({
-        doings: doings.filter(item => item.id !== id),});
+        doings: doings.filter(item => item.id !== id),
+      });
     }
   };
 
@@ -96,21 +96,23 @@ class Dnd extends Component {
       const { todos } = this.state;
       this.setState({
         todos: todos.map(info =>
-          data.id === info.id ? { ...info, ...data } : info,),
+          data.id === info.id ? { ...info, ...data } : info,
+        ),
         editing: false,
       });
       save(
         todoLS,
-        todos.map(info => (data.id === info.id ? { ...info, ...data } : info)),);
-    }
-  else if (from === 'doing'){
-    const { doings } = this.state;
+        todos.map(info => (data.id === info.id ? { ...info, ...data } : info)),
+      );
+    } else if (from === 'doing') {
+      const { doings } = this.state;
       this.setState({
         doings: doings.map(info =>
-          data.id === info.id ? { ...info, ...data } : info,),
+          data.id === info.id ? { ...info, ...data } : info,
+        ),
         editing: false,
       });
-  }
+    }
   };
 
   handleToggleEdit = e => {
@@ -123,7 +125,6 @@ class Dnd extends Component {
   handleToggleTimeon = boolean => {
     this.setState({ timerOn: boolean });
   };
-
 
   /**
    * A semi-generic way to handle multiple lists. Matches
@@ -204,13 +205,17 @@ class Dnd extends Component {
                         this.state.editingId === item.id ? (
                           <InlineForm
                             item={item}
-                            from='todo'
+                            from="todo"
                             onUpdate={this.handleUpdate}
                           />
                         ) : (
                           item.content
                         )}
-                        <DeleteBtn id={item.id}  from='todo' onRemove={this.handleRemove} />
+                        <DeleteBtn
+                          id={item.id}
+                          from="todo"
+                          onRemove={this.handleRemove}
+                        />
                       </div>
                     )}
                   </Draggable>
@@ -222,7 +227,10 @@ class Dnd extends Component {
         </div>
         <div className="doing__container">
           {this.state.doings.length > 0 ? (
-            <Timer onTimer={this.handleToggleTimeon} doing={this.state.doings} />
+            <Timer
+              onTimer={this.handleToggleTimeon}
+              doing={this.state.doings}
+            />
           ) : (
             <div className="doing__guide">
               지금 할 일을 <br />
@@ -233,35 +241,50 @@ class Dnd extends Component {
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
-                className={getListClass('doing', snapshot.isDraggingOver, this.state.doings.length)}
+                className={getListClass(
+                  'doing',
+                  snapshot.isDraggingOver,
+                  this.state.doings.length,
+                )}
               >
-                {this.state.doings.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={{ ...provided.draggableProps.style }}
-                        className={getItemClass('doing', snapshot.isDragging)}
-                        onDoubleClick={this.handleToggleEdit}
-                      >
-                        {this.state.editing &&
-                        this.state.editingId === item.id &&
-                        !this.state.timerOn ? (
-                          <InlineForm
-                            item={item}
-                            from='doing'
-                            onUpdate={this.handleUpdate}
+                {this.state.doings.map((item, index) =>
+                  this.state.timerOn ? (
+                    <div className="doing-item--timeOn">{item.content}</div>
+                  ) : (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{ ...provided.draggableProps.style }}
+                          className={getItemClass('doing', snapshot.isDragging)}
+                          onDoubleClick={this.handleToggleEdit}
+                        >
+                          {this.state.editing &&
+                          this.state.editingId === item.id ? (
+                            <InlineForm
+                              item={item}
+                              from="doing"
+                              onUpdate={this.handleUpdate}
+                            />
+                          ) : (
+                            item.content
+                          )}
+                          <DeleteBtn
+                            id={item.id}
+                            from="doing"
+                            onRemove={this.handleRemove}
                           />
-                        ) : (
-                          item.content
-                        )}
-                        {this.state.timerOn ? '' : <DeleteBtn id={item.id} from='doing' onRemove={this.handleRemove} />}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                        </div>
+                      )}
+                    </Draggable>
+                  ),
+                )}
                 {provided.placeholder}
               </div>
             )}
