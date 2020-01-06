@@ -164,12 +164,11 @@
 .doing__container {
   background-color: var(--oc-gray-0);
   width: 33%;
-  height:90vh;
   padding:5%;
-  
+  height:90vh;
 }
 
-.doing__guide {
+.doing-guide {
   width:100%;
   text-align:center;
   font-size:1.5rem;
@@ -177,12 +176,20 @@
   margin-bottom:30px;
 }
 
+.doing-guide--onStage {
+  width:100%;
+  text-align:center;
+  font-size:0.8rem;
+  color:var(--oc-red-3);
+  font-weight: 500;
+  margin-bottom:0px;
+}
+
 .doing__timer{
   text-align:center;
   font-size:2.4rem;
   font-weight:300;
   color: var(--oc-red-4);
-  margin-bottom:50px;
   -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
@@ -229,7 +236,7 @@
 .doing-list {
   padding: 8px;
   width: 100%;
-  height: 33%;
+  /* height: 20%; */
   border-radius: 20px;
   background-color:var(--oc-gray-0);
   border: 2px dotted var(--oc-gray-3);
@@ -255,15 +262,15 @@
 
 
 .doing-item {
-  width:90%;
+  width:100%;
   user-select: 'none';
   padding: 16px;
   border-radius: 30px;
   margin: 0 0 8px 0;
   font-weight: 500;
   color:var(--oc-gray-7);
-  background-color: var(--oc-gray-0);
-  border: solid 2px var(--oc-red-4);
+  background-color: var(--oc-red-0);
+  border: dotted 2px var(--oc-red-4);
   position: relative;
 }
 
@@ -274,14 +281,50 @@
 }
 
 .doing-item--timeOn {
-  height:60px;
+  height:62px;
   text-align: center;
+  color: var(--oc-gray-6);
 }
-
-
 
 .done__container {
   width: 33%;
+}
+
+.done-item {
+  user-select: 'none';
+  padding: 16px;
+  border-radius: 0;
+  border: dotted 2px transparent;
+  border-bottom: solid 1px var(--oc-gray-2);
+  margin:0;
+  position: relative;
+  color: var(--oc-gray-7);
+  background-color: transparent;
+  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.done-item__header {
+  display: flex;
+}
+
+.done-item__title{
+  width:auto;
+}
+
+.done-item__totaltime{
+  width:70px;
+  text-align: right;
+  font-size:0.8rem;
+  color:var(--oc-red-5);
+  margin-left:auto;
+
+}
+
+.done__timestamp {
+  font-size: 0.7rem;
+  text-align: right;
+  color: var(--oc-gray-6);
 }
 
 

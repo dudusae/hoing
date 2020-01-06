@@ -226,13 +226,10 @@ class Dnd extends Component {
           </Droppable>
         </div>
         <div className="doing__container">
-          {this.state.doings.length > 0 ? (
-            <Timer
-              onTimer={this.handleToggleTimeon}
-              doing={this.state.doings}
-            />
-          ) : (
-            <div className="doing__guide">
+          {this.state.doings.length > 0 ? 
+            <div className="doing-guide--onStage">
+              지금 집중해서 할 일</div> : (
+            <div className="doing-guide">
               지금 할 일을 <br />
               여기에 끌어다 놓으세요
             </div>
@@ -289,6 +286,12 @@ class Dnd extends Component {
               </div>
             )}
           </Droppable>
+          {this.state.doings.length > 0 ? (
+            <Timer
+              onTimer={this.handleToggleTimeon}
+              doing={this.state.doings}
+            />
+          ) : ''}
         </div>
         <DoneList />
       </DragDropContext>
