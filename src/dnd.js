@@ -60,6 +60,7 @@ class Dnd extends Component {
     doings: [],
     editing: false,
     editingId: '',
+    timerOn: false,
   };
 
   handleCreate = data => {
@@ -70,29 +71,41 @@ class Dnd extends Component {
     save(todoLS, todos.concat({ id: this.id++, ...data }));
   };
 
-  handleRemove = id => {
+  handleRemove = (from, id) => {
+    if (from === 'todo') {
     const { todos } = this.state;
     this.setState({
-      todos: todos.filter(item => item.id !== id),
-    });
+      todos: todos.filter(item => item.id !== id),});
     save(
       todoLS,
-      todos.filter(item => item.id !== id),
-    );
+      todos.filter(item => item.id !== id),);
+    } else if (from === 'doing') {
+      const { doings } = this.state;
+      this.setState({
+        doings: doings.filter(item => item.id !== id),});
+    }
   };
 
-  handleUpdate = data => {
-    const { todos } = this.state;
-    this.setState({
-      todos: todos.map(info =>
-        data.id === info.id ? { ...info, ...data } : info,
-      ),
-      editing: false,
-    });
-    save(
-      todoLS,
-      todos.map(info => (data.id === info.id ? { ...info, ...data } : info)),
-    );
+  handleUpdate = (data, from) => {
+    if (from === 'todo') {
+      const { todos } = this.state;
+      this.setState({
+        todos: todos.map(info =>
+          data.id === info.id ? { ...info, ...data } : info,),
+        editing: false,
+      });
+      save(
+        todoLS,
+        todos.map(info => (data.id === info.id ? { ...info, ...data } : info)),);
+    }
+  else if (from === 'doing'){
+    const { doings } = this.state;
+      this.setState({
+        doings: doings.map(info =>
+          data.id === info.id ? { ...info, ...data } : info,),
+        editing: false,
+      });
+  }
   };
 
   handleToggleEdit = e => {
@@ -101,6 +114,11 @@ class Dnd extends Component {
     this.setState({ editing: !editing });
     this.setState({ editingId: id });
   };
+
+  handleToggleTimeon = boolean => {
+    this.setState({ timerOn: boolean });
+  };
+
 
   /**
    * A semi-generic way to handle multiple lists. Matches
@@ -181,12 +199,13 @@ class Dnd extends Component {
                         this.state.editingId === item.id ? (
                           <InlineForm
                             item={item}
+                            from='todo'
                             onUpdate={this.handleUpdate}
                           />
                         ) : (
                           item.content
                         )}
-                        <DeleteBtn id={item.id} onRemove={this.handleRemove} />
+                        <DeleteBtn id={item.id}  from='todo' onRemove={this.handleRemove} />
                       </div>
                     )}
                   </Draggable>
@@ -198,7 +217,7 @@ class Dnd extends Component {
         </div>
         <div className="doing__container">
           {this.state.doings.length > 0 ? (
-            <Timer doing={this.state.doings} />
+            <Timer onTimer={this.handleToggleTimeon} doing={this.state.doings} />
           ) : (
             <div className="doing__guide">
               지금 할 일을 <br />
@@ -220,8 +239,20 @@ class Dnd extends Component {
                         {...provided.dragHandleProps}
                         style={{ ...provided.draggableProps.style }}
                         className={getItemClass('doing', snapshot.isDragging)}
+                        onDoubleClick={this.handleToggleEdit}
                       >
-                        {item.content}
+                        {this.state.editing &&
+                        this.state.editingId === item.id &&
+                        !this.state.timerOn ? (
+                          <InlineForm
+                            item={item}
+                            from='doing'
+                            onUpdate={this.handleUpdate}
+                          />
+                        ) : (
+                          item.content
+                        )}
+                        {this.state.timerOn ? '' : <DeleteBtn id={item.id} from='doing' onRemove={this.handleRemove} />}
                       </div>
                     )}
                   </Draggable>

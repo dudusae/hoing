@@ -15,8 +15,9 @@ class InlineForm extends Component {
   };
 
   handleSubmit = e => {
+    const { from, onUpdate } = this.props;
     e.preventDefault();
-    this.props.onUpdate(this.state);
+    onUpdate(this.state, from);
     this.setState({
       id: '',
       content: '',

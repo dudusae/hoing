@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../style.css';
 import useInterval from './useInterval';
 import { save, load } from './localStorage';
@@ -78,19 +78,18 @@ const TimerOff = ({ onClick }) => {
   );
 };
 
-const Timer = ({ doing }) => {
+const Timer = ({ doing, onTimer }) => {
   const [timerOn, setTimerOn] = useState(false);
-  const ready = doing[0] ; 
-  const [ing, setIng] = useState({
-    id: ready.id,
-    content: ready.content,
-    date: ready.date,
-    timeStamp: [],
-  })
+  const [ing, setIng] = useState({});
+  const init = () => { setIng({...doing[0], timeStamp:[]});}
+  
+  useEffect(init, [doing]);
 
   const handleTimer = e => {
     setTimerOn(!timerOn);
-    getTimeStamp(!timerOn);  };
+    getTimeStamp(!timerOn);
+    onTimer(!timerOn)
+  };
   
   const getTimeStamp = timerOn => {
     if (timerOn) {
@@ -105,12 +104,6 @@ const Timer = ({ doing }) => {
         init();
     }
 };
-
-  const init = () => {
-    setIng(ready);
-    setIng({...ing, timeStamp:[]})
-  }
-  console.log(ing)
 
   if (timerOn) {
     return <TimerOn onClick={handleTimer} />;

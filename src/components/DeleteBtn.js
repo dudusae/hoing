@@ -4,8 +4,9 @@ import './../style.css';
 class DeleteBtn extends Component {
 
   handleRemove = e => {
-    const { id, onRemove } = this.props;
-    onRemove(id);
+    const { from, id, onRemove } = this.props;
+    onRemove(from, id);
+    
   };
 
   render() {
