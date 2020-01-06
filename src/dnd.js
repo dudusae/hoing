@@ -6,8 +6,12 @@ import DeleteBtn from './components/DeleteBtn';
 import InlineForm from './components/InlineForm';
 import Timer from './components/Timer';
 import { save, load } from './components/localStorage';
+import DoneList from './components/DoneList';
+
+
 
 const todoLS = 'TODO';
+
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -35,10 +39,11 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const getListClass = (name, isDraggingOver) => {
+const getListClass = (name, isDraggingOver, listLength) => {
   const classList = [
     `${name}-list`,
     isDraggingOver ? `${name}-list--isDraggingOver` : '',
+    listLength > 0 ? `${name}-list--isContain` : '',
   ];
 
   return classList.join(' ');
@@ -228,7 +233,7 @@ class Dnd extends Component {
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
-                className={getListClass('doing', snapshot.isDraggingOver)}
+                className={getListClass('doing', snapshot.isDraggingOver, this.state.doings.length)}
               >
                 {this.state.doings.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -257,12 +262,12 @@ class Dnd extends Component {
                     )}
                   </Draggable>
                 ))}
-
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
         </div>
+        <DoneList />
       </DragDropContext>
     );
   }

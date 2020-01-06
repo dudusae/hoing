@@ -2,20 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './../style.css';
 import useInterval from './useInterval';
 import { save, load } from './localStorage';
-
+import { timeToMmSs } from './timeExp';
 const doneLS = 'DONE';
 
-const setTwoDigit = num => {
-  if (num < 10) {
-    return '0' + num;
-  } else return num;
-};
 
-const timeToMmSs = time => {
-  const min = setTwoDigit(Math.floor(time / 60000));
-  const sec = setTwoDigit(Math.floor((time % 60000) / 1000));
-  return `${min}:${sec}`;
-};
 
 const TimerOn = ({ onClick }) => {
   //   const [count, setCount] = useState(1500000);
@@ -48,7 +38,7 @@ const TimerOn = ({ onClick }) => {
 
   return (
     <div className="doing__timer">
-      {timeToMmSs(count)}
+      {timeToMmSs(count, ':')}
       {/* {timeIn ? 
             <button onClick={handleIsRunningChange}>
                 {isRunning === true ? '일시정지' : '재개'}
@@ -57,10 +47,10 @@ const TimerOn = ({ onClick }) => {
       {timeIn ? (
         ''
       ) : (
-        <div>
-          {timeToMmSs(timeOutCount)}
+        <div className="doing__timeout">
+          + {timeToMmSs(timeOutCount, ':')}
           <br />
-          <button onClick={onClick} name="timerOff">정지</button>
+          <button onClick={onClick} className="doing__btn" name="timerOff">정지</button>
         </div>
       )}
     </div>
@@ -71,7 +61,7 @@ const TimerOff = ({ onClick }) => {
   return (
     <div className="doing__timer">
       25:00
-      <button onClick={onClick} name="timerOn">
+      <button className="doing__btn" onClick={onClick} name="timerOn">
         시작
       </button>
     </div>
@@ -81,7 +71,8 @@ const TimerOff = ({ onClick }) => {
 const Timer = ({ doing, onTimer }) => {
   const [timerOn, setTimerOn] = useState(false);
   const [ing, setIng] = useState({});
-  const init = () => { setIng({...doing[0], timeStamp:[]});}
+  const [loaded, setLoaded] = useState(load(doneLS))
+  const init = () => { setIng({...doing});}
   
   useEffect(init, [doing]);
 
@@ -95,12 +86,13 @@ const Timer = ({ doing, onTimer }) => {
     if (timerOn) {
       setIng({...ing,
           id: Date.now(),
-          timeStamp: [...ing.timeStamp,{start: Date.now() },],
+          start: Date.now(),
       });
     }
     else {
-        setIng({...ing, timeStamp: [...ing.timeStamp,{end: Date.now() },],});
-        save(doneLS, {...ing, timeStamp: [...ing.timeStamp,{end: Date.now() },],});
+        setIng({...ing, end: Date.now()});
+        save(doneLS,[...loaded, {...ing, end: Date.now()}]);
+        setLoaded(load(doneLS));
         init();
     }
 };
