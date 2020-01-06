@@ -4,7 +4,7 @@ import './style.css';
 import TodoForm from './components/TodoForm';
 import DeleteBtn from './components/DeleteBtn'
 import InlineForm from './components/InlineForm';
-import DoingTimer from './components/DoingTimer';
+import Timer from './components/Timer';
 
 
 // a little function to help us with reordering the result
@@ -142,6 +142,8 @@ class Dnd extends Component {
         items: result.todo,
         selected: result.doing,
       });
+
+      console.log('이동');
     }
   };
 
@@ -188,7 +190,7 @@ class Dnd extends Component {
           </Droppable>
           </div>
         <div className="doing__container">
-        {this.state.selected.length > 0 ? <DoingTimer/> : <div className="doing__guide">지금 할 일을 <br/>여기에 끌어다 놓으세요</div> }
+        {this.state.selected.length > 0 ? <Timer/> : <div className="doing__guide">지금 할 일을 <br/>여기에 끌어다 놓으세요</div> }
           <Droppable droppableId="doing">
             
             {(provided, snapshot) => (
