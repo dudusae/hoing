@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './../style.css';
 
-class DeleteBtn extends Component {
-
-  handleRemove = e => {
-    const { from, id, onRemove } = this.props;
+const DeleteBtn = (props) => {
+  const handleRemove = e => {
+    const { from, id, onRemove } = props;
     onRemove(from, id);
-    
   };
 
-  render() {
     return (
-      <button className="delete__btn" onClick={this.handleRemove}>
+      <button className="delete__btn" onClick={handleRemove}>
         삭제
       </button>
     );
-  }
 }
 
 export default DeleteBtn;

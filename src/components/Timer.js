@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './../style.css';
-import useInterval from './useInterval';
-import { save, load } from './localStorage';
-import { timeToMmSs } from './timeExp';
+import useInterval from './../lib/UseInterval';
+import { save, load } from './../lib/LocalStorage';
+import { timeToMmSs } from './../lib/TimeExp';
+
 const doneLS = 'DONE';
-
-
 
 const TimerOn = ({ onClick }) => {
   //   const [count, setCount] = useState(1500000);
@@ -40,7 +39,6 @@ const TimerOn = ({ onClick }) => {
       {timeIn ? (<button onClick={onClick} className="doing__btn doing__stopbtn--timein" name="timerOff">정지</button>) 
       : (<button onClick={onClick} className="doing__btn doing__stopbtn--timeout" name="timerOff">정지</button>
       )}
-
     </div>
   );
 };

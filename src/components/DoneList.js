@@ -1,7 +1,7 @@
 import React from 'react';
-import { getTime, timeGap, timeToMmSs } from './timeExp';
+import { getTime, timeGap, timeToMmSs } from './../lib/TimeExp';
 import './../style.css';
-import { load } from './localStorage';
+import { load } from './../lib/LocalStorage';
 
 const doneLS = 'DONE';
 
