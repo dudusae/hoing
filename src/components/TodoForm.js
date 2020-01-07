@@ -29,8 +29,9 @@ class TodoForm extends Component {
   };
 
   handleSubmit = e => {
+    const { from, onCreate } = this.props;
     e.preventDefault();
-    this.props.onCreate(this.state);
+    onCreate(this.state, from);
     this.setState({
       id: '',
       content: '',

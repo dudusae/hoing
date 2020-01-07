@@ -53,7 +53,7 @@ const TimerOff = ({ onClick }) => {
   );
 };
 
-const Timer = ({ doing, onTimer }) => {
+const Timer = ({ doing, onTimer, from, onCreate }) => {
   const [timerOn, setTimerOn] = useState(false);
   const [ing, setIng] = useState({});
   const [loaded, setLoaded] = useState(load(doneLS))
@@ -78,6 +78,7 @@ const Timer = ({ doing, onTimer }) => {
         setIng({...ing, end: Date.now()});
         save(doneLS,[...loaded, {...ing, end: Date.now()}]);
         setLoaded(load(doneLS));
+        onCreate(ing, from);
         init();
     }
 };

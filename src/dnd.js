@@ -10,23 +10,35 @@ import DoneList from './components/DoneList';
 import { reorder, move, getListClass, getItemClass } from './lib/DndLib';
 
 const todoLS = 'TODO';
+const doneLS = 'DONE';
 
 class Dnd extends Component {
   id = 0;
   state = {
     todos: load(todoLS),
     doings: [],
+    dones: load(doneLS),
     editing: false,
     editingId: '',
     timerOn: false,
   };
 
-  handleCreate = data => {
+  handleCreate = (data, from) => {
+    if (from === 'todo') {
     const { todos } = this.state;
     this.setState({
       todos: todos.concat({ id: this.id++, ...data }),
     });
     save(todoLS, todos.concat({ id: this.id++, ...data }));
+  } else if (from === 'doing') {
+    
+    const { dones } = this.state;
+    this.setState({
+      dones: dones.concat({ id: this.id++, ...data }),
+    });
+
+    // save(todoLS, dones.concat({ id: this.id++, ...data }));
+  }
   };
 
   handleRemove = (from, id) => {
@@ -69,6 +81,17 @@ class Dnd extends Component {
         editing: false,
       });
     } else if (from === 'done'){
+      const { dones } = this.state;
+      this.setState({
+        dones: dones.map(info =>
+          data.id === info.id ? { ...info, ...data } : info,
+        ),
+        editing: false,
+      });
+      save(
+        doneLS,
+        dones.map(info => (data.id === info.id ? { ...info, ...data } : info)),
+      );
     }
   };
 
@@ -131,7 +154,7 @@ class Dnd extends Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="todo__container">
-          <TodoForm onCreate={this.handleCreate} />
+          <TodoForm from="todo" onCreate={this.handleCreate} />
 
           <Droppable droppableId="todo">
             {(provided, snapshot) => (
@@ -235,7 +258,8 @@ class Dnd extends Component {
             <Timer
               onTimer={this.handleToggleTimeon}
               doing={this.state.doings}
-              onCreate={this.handleDoneCreate} 
+              onCreate={this.handleCreate} 
+              from="doing"
             />
           ) : ''}
         </div>
