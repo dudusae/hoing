@@ -78,7 +78,7 @@ const Timer = ({ doing, onTimer, from, onCreate }) => {
         setIng({...ing, end: Date.now()});
         save(doneLS,[...loaded, {...ing, end: Date.now()}]);
         setLoaded(load(doneLS));
-        onCreate(ing, from);
+        onCreate({...ing, end: Date.now()}, from);
         init();
     }
 };

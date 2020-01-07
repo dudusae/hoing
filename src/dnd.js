@@ -6,7 +6,7 @@ import DeleteBtn from './components/DeleteBtn';
 import InlineForm from './components/InlineForm';
 import Timer from './components/Timer';
 import { save, load } from './lib/LocalStorage';
-import DoneList from './components/DoneList';
+import {DoneGroup, groupedArray} from './components/DoneList';
 import { reorder, move, getListClass, getItemClass } from './lib/DndLib';
 
 const todoLS = 'TODO';
@@ -41,7 +41,7 @@ class Dnd extends Component {
   }
   };
 
-  handleRemove = (from, id) => {
+  handleRemove = (id, from) => {
     if (from === 'todo') {
       const { todos } = this.state;
       this.setState({
@@ -94,6 +94,17 @@ class Dnd extends Component {
       );
     }
   };
+
+  getGroupedList = () => {
+    const groupByDate = groupedArray(this.state.dones);
+    return Object.keys(groupByDate).map((key, index) => (
+      <div key={index}>
+        <div className="done__date">{key}</div>
+        <DoneGroup data={groupByDate[key]} onUpdate={this.handleUpdate}/>
+      </div>
+    ))
+  }
+
 
   handleToggleEdit = e => {
     const { editing } = this.state;
@@ -263,21 +274,12 @@ class Dnd extends Component {
             />
           ) : ''}
         </div>
-        <DoneList />
-          {/* <div className="done__container">
-            <div className="done-list__title">완료한 목록<span className={this.state.dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
-            <div className="todo-list">
-              {Object.keys(this.groupByDate).map((key, index) => (
-                <div key={index}>
-                  <div className="done__date">{key}</div>
-                  <DoneGroup data={this.groupByDate[key]} onUpdate={this.handleUpdate}/>
-                </div>
-              ))}
-            </div>
-          </div> */}
-
-
-
+    <div className="done__container">
+      <div className="done-list__title">완료한 목록<span className={this.state.dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
+      <div className="todo-list">
+        {this.getGroupedList()}
+      </div>
+    </div>
       </DragDropContext>
     );
   }

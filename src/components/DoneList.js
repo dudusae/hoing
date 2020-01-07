@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { getTime, timeGap, timeToMmSs } from './../lib/TimeExp';
 import { groupBy } from './../lib/GroupBy';
 import './../style.css';
-import { save, load } from './../lib/LocalStorage';
 import InlineForm from './InlineForm';
 
-const doneLS = 'DONE';
 
 const DoneGroup = props => {
   const [editing, setEditing] = useState(false);
@@ -16,8 +14,8 @@ const DoneGroup = props => {
     setEditingId(parseInt(e.target.id));
   };
 
-  const handleUpdate = (data) => {
-    props.onUpdate(data);
+  const handleUpdate = (data, from) => {
+    props.onUpdate(data, from);
     setEditingId(false);
   }
 
@@ -48,59 +46,11 @@ const DoneGroup = props => {
   ));
 };
 
-const DoneList = () => {
-  const [dones, setDones] = useState(load(doneLS));
 
-  const groupedArray = data => {
-    const sortedDones = data.sort(function(a, b) {
-      return b['start'] - a['start'];});
-    return groupBy('date')(sortedDones);
-  }
-
-
-  const sortedDones = dones.sort(function(a, b) {
+const groupedArray = data => {
+  const sortedDones = data.sort(function(a, b) {
     return b['start'] - a['start'];});
+  return groupBy('date')(sortedDones);
+}
 
-  const groupByDate = groupBy('date')(sortedDones);
-
-  const handleUpdate = (data) => {
-      setDones(dones.map(info =>
-          data.id === info.id ? { ...info, ...data } : info,
-        ));
-      save(
-        doneLS,
-        dones.map(info => (data.id === info.id ? { ...info, ...data } : info)),
-      );
-  };
-
-
-
-  const getGroupedList = () => {
-    const groupByDate1 = groupedArray(dones);
-    return Object.keys(groupByDate1).map((key, index) => (
-      <div key={index}>
-        <div className="done__date">{key}</div>
-        <DoneGroup data={groupByDate1[key]} onUpdate={handleUpdate}/>
-      </div>
-    ))
-  }
-
-  console.log(getGroupedList())
-
-  return (
-    <div className="done__container">
-      <div className="done-list__title">완료한 목록<span className={dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
-      <div className="todo-list">
-        {getGroupedList()}
-        {/* {Object.keys(groupByDate).map((key, index) => (
-          <div key={index}>
-            <div className="done__date">{key}</div>
-            <DoneGroup data={groupByDate[key]} onUpdate={handleUpdate}/>
-          </div>
-        ))} */}
-      </div>
-    </div>
-  );
-};
-
-export default DoneList;
+export {DoneGroup, groupedArray};

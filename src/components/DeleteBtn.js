@@ -3,8 +3,8 @@ import './../style.css';
 
 const DeleteBtn = (props) => {
   const handleRemove = e => {
-    const { from, id, onRemove } = props;
-    onRemove(from, id);
+    const { id, from, onRemove } = props;
+    onRemove(id, from);
   };
 
     return (
