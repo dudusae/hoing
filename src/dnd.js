@@ -7,49 +7,9 @@ import InlineForm from './components/InlineForm';
 import Timer from './components/Timer';
 import { save, load } from './lib/LocalStorage';
 import DoneList from './components/DoneList';
+import { reorder, move, getListClass, getItemClass } from './lib/DndLib';
 
 const todoLS = 'TODO';
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  save(todoLS, result);
-  return result;
-};
-
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-  destClone.splice(droppableDestination.index, 0, removed);
-
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
-
-const getListClass = (name, isDraggingOver, listLength) => {
-  const classList = [
-    `${name}-list`,
-    isDraggingOver ? `${name}-list--isDraggingOver` : '',
-    listLength > 0 ? `${name}-list--isContain` : '',
-  ];
-
-  return classList.join(' ');
-};
-
-const getItemClass = (name, isDragging) => {
-  const classList = [
-    `${name}-item`,
-    isDragging ? `${name}-item--isDragging` : '',
-  ];
-
-  return classList.join(' ');
-};
 
 class Dnd extends Component {
   id = 0;
@@ -108,6 +68,7 @@ class Dnd extends Component {
         ),
         editing: false,
       });
+    } else if (from === 'done'){
     }
   };
 
@@ -214,14 +175,6 @@ class Dnd extends Component {
           </Droppable>
         </div>
         <div className="doing__container">
-          {/* {this.state.doings.length > 0 ? 
-            <div className="doing-guide--onStage">
-              지금 집중해서 할 일</div> : (
-            <div className="doing-guide">
-              할 일을 <br />
-              여기에 끌어다 놓으세요
-            </div>
-          )} */}
           {this.state.doings.length > 0 ? 
             <div className="doing-guide--onStage">
               지금 집중해서 할 일</div> : ''}
@@ -238,7 +191,7 @@ class Dnd extends Component {
                 {this.state.doings.length > 0 ? '' : <div className="doing-guide"> 할 일을 <br /> 여기에 끌어다 놓으세요</div>}
                 {this.state.doings.map((item, index) =>
                   this.state.timerOn ? (
-                    <div className="doing-item--timeOn">{item.content}</div>
+                    <div key={index} className="doing-item--timeOn">{item.content}</div>
                   ) : (
                     <Draggable
                       key={item.id}
@@ -282,10 +235,25 @@ class Dnd extends Component {
             <Timer
               onTimer={this.handleToggleTimeon}
               doing={this.state.doings}
+              onCreate={this.handleDoneCreate} 
             />
           ) : ''}
         </div>
         <DoneList />
+          {/* <div className="done__container">
+            <div className="done-list__title">완료한 목록<span className={this.state.dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
+            <div className="todo-list">
+              {Object.keys(this.groupByDate).map((key, index) => (
+                <div key={index}>
+                  <div className="done__date">{key}</div>
+                  <DoneGroup data={this.groupByDate[key]} onUpdate={this.handleUpdate}/>
+                </div>
+              ))}
+            </div>
+          </div> */}
+
+
+
       </DragDropContext>
     );
   }

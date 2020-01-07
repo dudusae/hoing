@@ -67,6 +67,7 @@ const DoneList = () => {
 
   return (
     <div className="done__container">
+      <div className="done-list__title">완료한 목록<span className={dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
       <div className="todo-list">
         {Object.keys(groupByDate).map((key, index) => (
           <div key={index}>
