@@ -290,6 +290,15 @@
   width: 33%;
 }
 
+.done__date {
+  font-size:0.6rem;
+  color: var(--oc-gray-6);
+  text-align: center;
+  background-color: var(--oc-gray-2);
+  padding:2px 8px;
+
+}
+
 .done-item {
   user-select: 'none';
   padding: 16px;

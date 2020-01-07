@@ -58,7 +58,7 @@ const Timer = ({ doing, onTimer }) => {
   const [timerOn, setTimerOn] = useState(false);
   const [ing, setIng] = useState({});
   const [loaded, setLoaded] = useState(load(doneLS))
-  const init = () => { setIng({...doing});}
+  const init = () => { setIng(...doing);}
   
   useEffect(init, [doing]);
 

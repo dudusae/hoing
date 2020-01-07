@@ -5,12 +5,11 @@ import TodoForm from './components/TodoForm';
 import DeleteBtn from './components/DeleteBtn';
 import InlineForm from './components/InlineForm';
 import Timer from './components/Timer';
-import { save, load } from './components/localStorage';
+import { save, load } from './lib/LocalStorage';
 import DoneList from './components/DoneList';
 
 const todoLS = 'TODO';
 
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -19,9 +18,6 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-/**
- * Moves an item from one list to another list.
- */
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
@@ -126,11 +122,6 @@ class Dnd extends Component {
     this.setState({ timerOn: boolean });
   };
 
-  /**
-   * A semi-generic way to handle multiple lists. Matches
-   * the IDs of the droppable container to the names of the
-   * source arrays stored in the state.
-   */
   id2List = {
     todo: 'todos',
     doing: 'doings',
@@ -141,7 +132,6 @@ class Dnd extends Component {
   onDragEnd = result => {
     const { source, destination } = result;
 
-    // dropped outside the list
     if (!destination) {
       return;
     }
@@ -176,8 +166,6 @@ class Dnd extends Component {
     }
   };
 
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>

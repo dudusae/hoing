@@ -5532,6 +5532,13 @@ inflight@^1.0.4, inflight@~1.0.6:
     once "^1.3.0"
     wrappy "1"
 
+informed@^2.11.16:
+  version "2.11.16"
+  resolved "https://registry.yarnpkg.com/informed/-/informed-2.11.16.tgz#85686c3aa0a52ab6a2c911b498a3fdb193c1bba7"
+  integrity sha512-jqFdvz1PR9d6W44C+c4Zib4311olRaOJToxwY6mNuYIxRxSS5VPrLIJQueZWrmyIfNIPiCD7Y/1lktNHPs4FpQ==
+  dependencies:
+    lodash "^4.17.11"
+
 inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
