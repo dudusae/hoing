@@ -21,6 +21,7 @@
 }
 
 .todo-form__field {
+  margin-top:20px;
   font-family: inherit;
   width: 100%;
   border: 0;
@@ -31,19 +32,22 @@
   padding: 14px 0 10px 0;
   background: transparent;
   transition: border-color 0.15s;
+  appearance: none;
 }
+
 .todo-form__field::placeholder {
   color: transparent;
 }
+
 .todo-form__field:placeholder-shown ~ .todo-form__label {
   font-size: 1.3rem;
   cursor: text;
-  top: 20px;
+  top: 40px;
 }
 
 .todo-form__label {
   position: absolute;
-  top: 0;
+  top: 20px;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
@@ -58,9 +62,10 @@
   border-image: linear-gradient(to right, var(--oc-red-6), var(--oc-red-3));
   border-image-slice: 1;
 }
+
 .todo-form__field:focus ~ .todo-form__label {
   position: absolute;
-  top: 0;
+  top: 10px;
   display: block;
   transition: 0.2s;
   font-size: 0.7rem;
@@ -104,7 +109,6 @@
   }
 }
 
-
 .inline__field{
   width:90%;
   height:24px;
@@ -116,14 +120,9 @@
   background-color: transparent;
 }
 
-
-
-
 .todo__container {
   width: 33%;
 }
-
-
 
 .todo-list {
   padding: 8px;
@@ -173,7 +172,7 @@
   text-align:center;
   font-size:1.5rem;
   color:var(--oc-gray-3);
-  margin-bottom:30px;
+  margin: 30px auto;
 }
 
 .doing-guide--onStage {
@@ -204,7 +203,7 @@
 }
 
 .doing__btn {
-  width:100%;
+  width:90%;
   height:60px;
   font-size:1.5rem;
   border-radius: 8px;
@@ -236,7 +235,6 @@
 .doing-list {
   padding: 8px;
   width: 100%;
-  /* height: 20%; */
   border-radius: 20px;
   background-color:var(--oc-gray-0);
   border: 2px dotted var(--oc-gray-3);
@@ -259,7 +257,6 @@
   background-color: transparent;
   border: none;
 }
-
 
 .doing-item {
   width:100%;
@@ -296,7 +293,6 @@
   text-align: center;
   background-color: var(--oc-gray-2);
   padding:2px 8px;
-
 }
 
 .done-item {
@@ -327,7 +323,6 @@
   font-size:0.8rem;
   color:var(--oc-red-5);
   margin-left:auto;
-
 }
 
 .done__timestamp {
@@ -336,4 +331,22 @@
   color: var(--oc-gray-6);
 }
 
+/* Responsibel Web */
 
+@media (max-width: 999px) { 
+  #root {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  .todo__container,
+  .doing__container,
+  .done__container {
+    width:100%;
+  }
+
+  .doing__container {
+    height:auto;
+  }
+
+ }

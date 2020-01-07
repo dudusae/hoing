@@ -7,8 +7,7 @@ import { timeToMmSs } from './../lib/TimeExp';
 const doneLS = 'DONE';
 
 const TimerOn = ({ onClick }) => {
-  //   const [count, setCount] = useState(1500000);
-  const [count, setCount] = useState(2000);
+  const [count, setCount] = useState(1500000);
   const [timeIn, setTimeIn] = useState(true);
   const [timeOutCount, setTimeOutCount] = useState(1000);
 

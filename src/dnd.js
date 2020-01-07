@@ -214,14 +214,17 @@ class Dnd extends Component {
           </Droppable>
         </div>
         <div className="doing__container">
-          {this.state.doings.length > 0 ? 
+          {/* {this.state.doings.length > 0 ? 
             <div className="doing-guide--onStage">
               지금 집중해서 할 일</div> : (
             <div className="doing-guide">
-              지금 할 일을 <br />
+              할 일을 <br />
               여기에 끌어다 놓으세요
             </div>
-          )}
+          )} */}
+          {this.state.doings.length > 0 ? 
+            <div className="doing-guide--onStage">
+              지금 집중해서 할 일</div> : ''}
           <Droppable droppableId="doing">
             {(provided, snapshot) => (
               <div
@@ -232,6 +235,7 @@ class Dnd extends Component {
                   this.state.doings.length,
                 )}
               >
+                {this.state.doings.length > 0 ? '' : <div className="doing-guide"> 할 일을 <br /> 여기에 끌어다 놓으세요</div>}
                 {this.state.doings.map((item, index) =>
                   this.state.timerOn ? (
                     <div className="doing-item--timeOn">{item.content}</div>
