@@ -6,7 +6,7 @@ import DeleteBtn from './components/DeleteBtn';
 import InlineForm from './components/InlineForm';
 import Timer from './components/Timer';
 import { save, load } from './lib/LocalStorage';
-import {DoneGroup, groupedArray} from './components/DoneList';
+import { DoneGroup, groupedArray } from './components/DoneList';
 import { reorder, move, getListClass, getItemClass } from './lib/DndLib';
 
 const todoLS = 'TODO';
@@ -25,20 +25,19 @@ class Dnd extends Component {
 
   handleCreate = (data, from) => {
     if (from === 'todo') {
-    const { todos } = this.state;
-    this.setState({
-      todos: todos.concat({ id: this.id++, ...data }),
-    });
-    save(todoLS, todos.concat({ id: this.id++, ...data }));
-  } else if (from === 'doing') {
-    
-    const { dones } = this.state;
-    this.setState({
-      dones: dones.concat({ id: this.id++, ...data }),
-    });
+      const { todos } = this.state;
+      this.setState({
+        todos: todos.concat({ id: this.id++, ...data }),
+      });
+      save(todoLS, todos.concat({ id: this.id++, ...data }));
+    } else if (from === 'doing') {
+      const { dones } = this.state;
+      this.setState({
+        dones: dones.concat({ id: this.id++, ...data }),
+      });
 
-    // save(todoLS, dones.concat({ id: this.id++, ...data }));
-  }
+      // save(todoLS, dones.concat({ id: this.id++, ...data }));
+    }
   };
 
   handleRemove = (id, from) => {
@@ -80,7 +79,7 @@ class Dnd extends Component {
         ),
         editing: false,
       });
-    } else if (from === 'done'){
+    } else if (from === 'done') {
       const { dones } = this.state;
       this.setState({
         dones: dones.map(info =>
@@ -100,11 +99,10 @@ class Dnd extends Component {
     return Object.keys(groupByDate).map((key, index) => (
       <div key={index}>
         <div className="done__date">{key}</div>
-        <DoneGroup data={groupByDate[key]} onUpdate={this.handleUpdate}/>
+        <DoneGroup data={groupByDate[key]} onUpdate={this.handleUpdate} />
       </div>
-    ))
-  }
-
+    ));
+  };
 
   handleToggleEdit = e => {
     const { editing } = this.state;
@@ -209,9 +207,11 @@ class Dnd extends Component {
           </Droppable>
         </div>
         <div className="doing__container">
-          {this.state.doings.length > 0 ? 
-            <div className="doing-guide--onStage">
-              지금 집중해서 할 일</div> : ''}
+          {this.state.doings.length > 0 ? (
+            <div className="doing-guide--onStage">지금 집중해서 할 일</div>
+          ) : (
+            ''
+          )}
           <Droppable droppableId="doing">
             {(provided, snapshot) => (
               <div
@@ -222,10 +222,19 @@ class Dnd extends Component {
                   this.state.doings.length,
                 )}
               >
-                {this.state.doings.length > 0 ? '' : <div className="doing-guide"> 할 일을 <br /> 여기에 끌어다 놓으세요</div>}
+                {this.state.doings.length > 0 ? (
+                  ''
+                ) : (
+                  <div className="doing-guide">
+                    {' '}
+                    할 일을 <br /> 여기에 끌어다 놓으세요
+                  </div>
+                )}
                 {this.state.doings.map((item, index) =>
                   this.state.timerOn ? (
-                    <div key={index} className="doing-item--timeOn">{item.content}</div>
+                    <div key={index} className="doing-item--timeOn">
+                      {item.content}
+                    </div>
                   ) : (
                     <Draggable
                       key={item.id}
@@ -269,17 +278,22 @@ class Dnd extends Component {
             <Timer
               onTimer={this.handleToggleTimeon}
               doing={this.state.doings}
-              onCreate={this.handleCreate} 
+              onCreate={this.handleCreate}
               from="doing"
             />
-          ) : ''}
+          ) : (
+            ''
+          )}
         </div>
-    <div className="done__container">
-      <div className="done-list__title">완료한 목록<span className={this.state.dones.length > 0 ? 'blind' : ''}>이 여기 쌓여요</span></div>
-      <div className="todo-list">
-        {this.getGroupedList()}
-      </div>
-    </div>
+        <div className="done__container">
+          <div className="done-list__title">
+            완료한 목록
+            <span className={this.state.dones.length > 0 ? 'blind' : ''}>
+              이 여기 쌓여요
+            </span>
+          </div>
+          <div className="todo-list">{this.getGroupedList()}</div>
+        </div>
       </DragDropContext>
     );
   }
