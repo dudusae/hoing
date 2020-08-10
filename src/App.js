@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dnd from './Dnd';
+import Dnd from './dnd';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends Component {
