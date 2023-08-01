@@ -1,4 +1,6 @@
 # 할일+시간관리 Hoing
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdudusae%2Fhoing.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdudusae%2Fhoing?ref=badge_shield)
+
 Hoing은 오늘 할일을 메모하고, 할일을 수행하는 동안 시간을 체크해줍니다.
 
 
@@ -26,3 +28,7 @@ https://dudusae.github.io/hoing/
 ## 의견 보내기
 
 Hoing 프로젝트에 제안하고 싶은 사항이 있다면 이슈를 생성해주시길 바랍니다.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdudusae%2Fhoing.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdudusae%2Fhoing?ref=badge_large)
